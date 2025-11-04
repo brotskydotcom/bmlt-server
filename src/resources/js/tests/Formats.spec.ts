@@ -31,22 +31,22 @@ describe('check content in Formats tab', () => {
   test('edit a format', async () => {
     // this test doesn't involve editing a translation in the popup -- that's tested separately to keep the test size more manageable
     const user = await login('serveradmin', 'Formats');
-    await user.click(await screen.findByRole('cell', { name: '(BT) Basic Text' }));
+    await user.click(await screen.findByRole('cell', { name: '(B) Beginners' }));
     const b = screen.getByRole('button', { name: 'Apply Changes' });
     expect(b).toBeDisabled();
-    const nawsFormat = screen.getByRole('combobox', { name: 'NAWS Format' }) as HTMLSelectElement;
-    expect(nawsFormat.value).toBe('BT');
-    // pretty silly to change it to Candlelight, but it's just for the sake of unit testing ...
-    await userEvent.selectOptions(nawsFormat, ['CAN']);
-    expect(nawsFormat.value).toBe('CAN');
+    const a_aFormat = screen.getByRole('combobox', { name: 'WSO Equivalent' }) as HTMLSelectElement;
+    expect(a_aFormat.value).toBe('BEG');
+    // pretty silly to change it to People of Color, but it's just for the sake of unit testing ...
+    await userEvent.selectOptions(a_aFormat, ['POC']);
+    expect(a_aFormat.value).toBe('POC');
     const formatType = screen.getByRole('combobox', { name: 'Format Type' }) as HTMLSelectElement;
-    // expect(formatType.value).toBe('MEETING_FORMAT');
-    await userEvent.selectOptions(formatType, ['COMMON_NEEDS_OR_RESTRICTION']);
-    expect(formatType.value).toBe('COMMON_NEEDS_OR_RESTRICTION');
+    // expect(formatType.value).toBe('COMMON_NEEDS_OR_RESTRICTION');
+    await userEvent.selectOptions(formatType, ['MEETING_FORMAT']);
+    expect(formatType.value).toBe('MEETING_FORMAT');
     const applyChanges = screen.getByRole('button', { name: 'Apply Changes' });
     await user.click(applyChanges);
-    expect(mockSavedFormatUpdate?.worldId).toBe('CAN');
-    expect(mockSavedFormatUpdate?.type).toBe('COMMON_NEEDS_OR_RESTRICTION');
+    expect(mockSavedFormatUpdate?.worldId).toBe('POC');
+    expect(mockSavedFormatUpdate?.type).toBe('MEETING_FORMAT');
     expect(mockSavedFormatCreate).toBe(null);
     expect(mockDeletedFormatId).toBe(null);
   });
@@ -161,8 +161,8 @@ describe('check content in Formats tab', () => {
   test('try to create a format with no translations', async () => {
     const user = await login('serveradmin', 'Formats');
     await user.click(await screen.findByRole('button', { name: 'Add Format' }));
-    const nawsFormat = screen.getByRole('combobox', { name: 'NAWS Format' }) as HTMLSelectElement;
-    await userEvent.selectOptions(nawsFormat, ['CAN']);
+    const a_aFormat = screen.getByRole('combobox', { name: 'WSO Equivalent' }) as HTMLSelectElement;
+    await userEvent.selectOptions(a_aFormat, ['AC']);
     const addButtons = await screen.findAllByRole('button', { name: 'Add Format' });
     // there are two 'Add Format' buttons at this point -- kind of a hack -- just pick the second one
     await user.click(addButtons[1]);

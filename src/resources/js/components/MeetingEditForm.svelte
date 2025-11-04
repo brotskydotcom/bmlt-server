@@ -3,6 +3,7 @@
   import { validator } from '@felte/validator-yup';
   import { createForm } from 'felte';
   import { Button, Checkbox, Hr, Label, Input, Helper, Select, MultiSelect, Badge, Spinner, Tooltip } from 'flowbite-svelte';
+  import { Textarea } from 'flowbite-svelte'; // al-anon only
   import * as yup from 'yup';
   import L from 'leaflet';
   import { writable } from 'svelte/store';
@@ -363,10 +364,10 @@
           }),
         locationNeighborhood: yup.string().transform((v) => v.trim()),
         locationCitySubsection: yup.string().transform((v) => v.trim()),
-        locationMunicipality: yup.string().transform((v) => v.trim()),
+        locationMunicipality: yup.string().transform((v) => v.trim()).required($translations.a_aFieldRequiredError),
         locationSubProvince: yup.string().transform((v) => v.trim()),
-        locationProvince: yup.string().transform((v) => v.trim()),
-        locationPostalCode1: yup.string().transform((v) => v.trim()),
+        locationProvince: yup.string().transform((v) => v.trim()).required($translations.a_aFieldRequiredError),
+        locationPostalCode1: yup.string().transform((v) => v.trim()).required($translations.a_aFieldRequiredError),
         locationNation: yup.string().transform((v) => v.trim()),
         phoneMeetingNumber: yup.string().transform((v) => v.trim()),
         virtualMeetingLink: yup
@@ -395,12 +396,11 @@
   });
 
   const FORMAT_TYPE_GROUPS = [
-    { type: 'MEETING_FORMAT', name: $translations.formatTypeCode_MEETING_FORMAT, color: 'green' },
-    { type: 'OPEN_OR_CLOSED', name: $translations.formatTypeCode_OPEN_OR_CLOSED, color: 'pink' },
-    { type: 'COMMON_NEEDS_OR_RESTRICTION', name: $translations.formatTypeCode_COMMON_NEEDS_OR_RESTRICTION, color: 'blue' },
-    { type: 'LOCATION', name: $translations.formatTypeCode_LOCATION, color: 'purple' },
-    { type: 'LANGUAGE', name: $translations.formatTypeCode_LANGUAGE, color: 'yellow' },
-    { type: 'ALERT', name: $translations.formatTypeCode_ALERT, color: 'red' }
+    { type: 'MEETING_FORMAT', name: $translations.a_aFormatTypeCode_MEETING_FORMAT, color: 'green' },
+    { type: 'OPEN_OR_CLOSED', name: $translations.a_aFormatTypeCode_OPEN_OR_CLOSED, color: 'pink' },
+    { type: 'COMMON_NEEDS_OR_RESTRICTION', name: $translations.a_aFormatTypeCode_COMMON_NEEDS_OR_RESTRICTION, color: 'blue' },
+    { type: 'LOCATION', name: $translations.a_aFormatTypeCode_LOCATION, color: 'purple' },
+    { type: 'LANGUAGE', name: $translations.a_aFormatTypeCode_LANGUAGE, color: 'yellow' }
   ];
 
   function createGroupedFormatItems(filteredFormats: any[]) {
@@ -442,8 +442,8 @@
     const noneGroupItems =
       unknownTypes.length > 0
         ? [
-            createGroupHeader('none', $translations.formatTypeCode_NONE),
-            ...sortAlphabetically(unknownTypes.flatMap((type) => formatsByType[type]).map((format) => formatItem({ ...format, type: format.type || $translations.formatTypeCode_NONE })))
+            createGroupHeader('none', $translations.a_aFormatTypeCode_NONE),
+            ...sortAlphabetically(unknownTypes.flatMap((type) => formatsByType[type]).map((format) => formatItem({ ...format, type: format.type || $translations.a_aFormatTypeCode_NONE })))
           ]
         : [];
     return [...knownGroupItems, ...noneGroupItems];
@@ -909,9 +909,9 @@
       {/if}
     </div>
   </div>
-  <div class="grid gap-4 md:grid-cols-2">
-    <div class="w-full">
-      <Label for="email" class="mt-2 mb-2">{$translations.emailTitle}</Label>
+  <div class="grid gap-4 md:grid-cols-3">
+    <div class="md:col-span-2">
+      <Label for="email" class="mt-2 mb-2">{$translations.a_aMtgEmailTitle}</Label>
       <Input type="email" id="email" name="email" />
       {#if $errors.email}
         <Helper class="mt-2" color="red">
@@ -920,7 +920,7 @@
       {/if}
     </div>
     <div class="w-full">
-      <Label for="worldId" class="mt-2 mb-2">{$translations.worldIdTitle}</Label>
+      <Label for="worldId" class="mt-2 mb-2">{$translations.a_aWorldIdTitle}</Label>
       <Input type="text" id="worldId" name="worldId" />
       {#if $errors.worldId}
         <Helper class="mt-2" color="red">
@@ -1038,8 +1038,8 @@
   </div>
   <div class="grid gap-4 md:grid-cols-2">
     <div class="md:col-span-2">
-      <Label for="locationInfo" class="mt-2 mb-2">{$translations.extraInfoTitle}</Label>
-      <Input type="text" id="locationInfo" name="locationInfo" />
+      <Label for="locationInfo" class="mt-2 mb-2">{$translations.a_aExtraInfoTitle}</Label>
+      <Textarea id="locationInfo" name="locationInfo" class="w-full" rows={3} />
       {#if $errors.locationInfo}
         <Helper class="mt-2" color="red">
           {$errors.locationInfo}
@@ -1173,7 +1173,7 @@
   <div class="grid gap-4 md:grid-cols-2">
     <div class="md:col-span-2">
       <Label for="virtualMeetingAdditionalInfo" class="mt-2 mb-2">{$translations.virtualMeetingAdditionalInfoTitle}</Label>
-      <Input type="text" id="virtualMeetingAdditionalInfo" name="virtualMeetingAdditionalInfo" />
+      <Textarea id="virtualMeetingAdditionalInfo" name="virtualMeetingAdditionalInfo" class="w-full" rows={3} />
       {#if $errors.virtualMeetingAdditionalInfo}
         <Helper class="mt-2" color="red">
           {$errors.virtualMeetingAdditionalInfo}
@@ -1187,7 +1187,7 @@
   <div class="grid gap-4 md:grid-cols-2">
     <div class="md:col-span-2">
       <Label for="comments" class="mt-2 mb-2">{$translations.commentsTitle}</Label>
-      <Input type="text" id="comments" name="comments" />
+      <Textarea id="comments" name="comments" class="w-full" rows={4} />
       {#if $errors.comments}
         <Helper class="mt-2" color="red">
           {$errors.comments}
@@ -1197,27 +1197,7 @@
   </div>
   <div class="grid gap-4 md:grid-cols-2">
     <div class="w-full">
-      <Label for="busLines" class="mt-2 mb-2">{$translations.busLinesTitle}</Label>
-      <Input type="text" id="busLines" name="busLines" />
-      {#if $errors.busLines}
-        <Helper class="mt-2" color="red">
-          {$errors.busLines}
-        </Helper>
-      {/if}
-    </div>
-    <div class="w-full">
-      <Label for="trainLines" class="mt-2 mb-2">{$translations.trainLinesTitle}</Label>
-      <Input type="text" id="trainLines" name="trainLines" />
-      {#if $errors.trainLines}
-        <Helper class="mt-2" color="red">
-          {$errors.trainLines}
-        </Helper>
-      {/if}
-    </div>
-  </div>
-  <div class="grid gap-4 md:grid-cols-3">
-    <div class="w-full">
-      <Label for="contactName1" class="mt-2 mb-2">{$translations.contact1NameTitle}</Label>
+      <Label for="contactName1" class="mt-2 mb-2">{$translations.a_aCmaNameTitle}</Label>
       <Input type="text" id="contactName1" name="contactName1" />
       {#if $errors.contactName1}
         <Helper class="mt-2" color="red">
@@ -1225,37 +1205,28 @@
         </Helper>
       {/if}
     </div>
-    <div class="w-full">
-      <Label for="contactPhone1" class="mt-2 mb-2">{$translations.contact1PhoneTitle}</Label>
-      <Input type="text" id="contactPhone1" name="contactPhone1" />
-      {#if $errors.contactPhone1}
-        <Helper class="mt-2" color="red">
-          {$errors.contactPhone1}
-        </Helper>
-      {/if}
-    </div>
-    <div class="w-full">
-      <Label for="contactEmail1" class="mt-2 mb-2">{$translations.contact1EmailTitle}</Label>
-      <Input type="text" id="contactEmail1" name="contactEmail1" />
-      {#if $errors.contactEmail1}
-        <Helper class="mt-2" color="red">
-          {$errors.contactEmail1}
-        </Helper>
-      {/if}
-    </div>
+      <div class="w-full">
+        <Label for="contactName2" class="mt-2 mb-2">{$translations.a_aGrNameTitle}</Label>
+          <Input type="text" id="contactName2" name="contactName2" />
+          {#if $errors.contactName2}
+              <Helper class="mt-2" color="red">
+                  {$errors.contactName2}
+              </Helper>
+          {/if}
+      </div>
   </div>
-  <div class="grid gap-4 md:grid-cols-3">
+  <div class="grid gap-4 md:grid-cols-2">
+      <div class="w-full">
+          <Label for="contactPhone1" class="mt-2 mb-2">{$translations.a_aCmaPhoneTitle}</Label>
+          <Input type="text" id="contactPhone1" name="contactPhone1" />
+          {#if $errors.contactPhone1}
+              <Helper class="mt-2" color="red">
+                  {$errors.contactPhone1}
+              </Helper>
+          {/if}
+      </div>
     <div class="w-full">
-      <Label for="contactName2" class="mt-2 mb-2">{$translations.contact2NameTitle}</Label>
-      <Input type="text" id="contactName2" name="contactName2" />
-      {#if $errors.contactName2}
-        <Helper class="mt-2" color="red">
-          {$errors.contactName2}
-        </Helper>
-      {/if}
-    </div>
-    <div class="w-full">
-      <Label for="contactPhone2" class="mt-2 mb-2">{$translations.contact2PhoneTitle}</Label>
+      <Label for="contactPhone2" class="mt-2 mb-2">{$translations.a_aGrPhoneTitle}</Label>
       <Input type="text" id="contactPhone2" name="contactPhone2" />
       {#if $errors.contactPhone2}
         <Helper class="mt-2" color="red">
@@ -1263,16 +1234,38 @@
         </Helper>
       {/if}
     </div>
-    <div class="w-full">
-      <Label for="contactEmail2" class="mt-2 mb-2">{$translations.contact2EmailTitle}</Label>
-      <Input type="text" id="contactEmail2" name="contactEmail2" />
-      {#if $errors.contactEmail2}
-        <Helper class="mt-2" color="red">
-          {$errors.contactEmail2}
-        </Helper>
-      {/if}
-    </div>
   </div>
+    <div class="grid gap-4 md:grid-cols-2">
+        <div class="w-full">
+            <Label for="contactEmail1" class="mt-2 mb-2">{$translations.a_aCmaEmailTitle}</Label>
+            <Input type="text" id="contactEmail1" name="contactEmail1" />
+            {#if $errors.contactEmail1}
+                <Helper class="mt-2" color="red">
+                    {$errors.contactEmail1}
+                </Helper>
+            {/if}
+        </div>
+        <div class="w-full">
+            <Label for="contactEmail2" class="mt-2 mb-2">{$translations.a_aGrEmailTitle}</Label>
+            <Input type="text" id="contactEmail2" name="contactEmail2" />
+            {#if $errors.contactEmail2}
+                <Helper class="mt-2" color="red">
+                    {$errors.contactEmail2}
+                </Helper>
+            {/if}
+        </div>
+  </div>
+    <div class="grid gap-4 md:grid-cols-2">
+        <div class="md:col-span-2">
+            <Label for="busLines" class="mt-2 mb-2">{$translations.a_aBusLinesTitle}</Label>
+            <Textarea id="busLines" name="busLines" class="w-full" rows={3} />
+            {#if $errors.busLines}
+                <Helper class="mt-2" color="red">
+                    {$errors.busLines}
+                </Helper>
+            {/if}
+        </div>
+    </div>
   {#each settings.customFields as { name, displayName }}
     <div class="grid gap-4 md:grid-cols-2">
       <div class="md:col-span-2">

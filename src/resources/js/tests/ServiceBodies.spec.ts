@@ -117,7 +117,7 @@ describe('check editing, adding, and deleting service bodies using the popup dia
     await user.clear(helpline);
     await user.type(helpline, '843-555-7247');
     expect(helpline.value).toBe('843-555-7247');
-    const worldid = screen.getByRole('textbox', { name: 'World Committee Code' }) as HTMLInputElement;
+    const worldid = screen.getByRole('textbox', { name: 'World Service ID' }) as HTMLInputElement;
     expect(worldid.value).toBe('AS778');
     await user.clear(worldid);
     await user.type(worldid, 'AS788');
@@ -187,7 +187,7 @@ describe('check editing, adding, and deleting service bodies using the popup dia
     const helpline = screen.getByRole('textbox', { name: 'Helpline' }) as HTMLInputElement;
     await user.type(helpline, '843-555-7247');
     expect(helpline.value).toBe('843-555-7247');
-    const worldid = screen.getByRole('textbox', { name: 'World Committee Code' }) as HTMLInputElement;
+    const worldid = screen.getByRole('textbox', { name: 'World Service ID' }) as HTMLInputElement;
     await user.type(worldid, 'AS788');
     expect(worldid.value).toBe('AS788');
     expect(actuallyAddButton).toBeEnabled();

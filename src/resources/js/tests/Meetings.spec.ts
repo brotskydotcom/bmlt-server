@@ -41,7 +41,7 @@ describe('check content in Meetings tab when logged in as various users', () => 
     await user.click(addMeetingButton);
     const nameInput = screen.getByLabelText('Name');
     await user.type(nameInput, ' ');
-    const emailInput = screen.getByLabelText('Email');
+    const emailInput = screen.getByLabelText('Group Email');
     await user.type(emailInput, 'Invalid-email');
     // there are now 2 'Add Meeting' buttons
     const addMeeting2 = screen.getAllByText('Add Meeting');

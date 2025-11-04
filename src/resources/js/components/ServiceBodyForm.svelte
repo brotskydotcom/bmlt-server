@@ -249,7 +249,7 @@
       </Helper>
     </div>
     <div class="md:col-span-2">
-      <Label for="worldId" class="mb-2">{$translations.worldIdTitle}</Label>
+      <Label for="worldId" class="mb-2">{$translations.a_aWorldIdTitle}</Label>
       <Input type="text" id="worldId" name="worldId" />
       <Helper class="mt-2" color="red">
         {#if $errors.worldId}

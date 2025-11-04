@@ -105,9 +105,9 @@ describe('check Administration tab', () => {
       expect(trans['A1'].v).toBe('Key');
       expect(trans['B1'].v).toBe('English');
       expect(trans['C1']).toBe(undefined);
-      expect(trans['A2'].v).toBe('accountSettingsTitle');
-      expect(trans['B2'].v).toBe('Account Settings');
-      expect(trans['C2']).toBe(undefined);
+      expect(trans['A35'].v).toBe('accountSettingsTitle');
+      expect(trans['B35'].v).toBe('Account Settings');
+      expect(trans['C35']).toBe(undefined);
     }
   });
 
@@ -127,9 +127,9 @@ describe('check Administration tab', () => {
       expect(trans['A1'].v).toBe('Key');
       expect(trans['B1'].v).toBe('English');
       expect(trans['C1'].v).toBe('Deutsch');
-      expect(trans['A2'].v).toBe('accountSettingsTitle');
-      expect(trans['B2'].v).toBe('Account Settings');
-      expect(trans['C2'].v).toBe('Account Einstellungen');
+      expect(trans['A35'].v).toBe('accountSettingsTitle');
+      expect(trans['B35'].v).toBe('Account Settings');
+      expect(trans['C35'].v).toBe('Account Einstellungen');
     }
   });
 });

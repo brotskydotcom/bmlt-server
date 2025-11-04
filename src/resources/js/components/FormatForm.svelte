@@ -35,56 +35,36 @@
   // true if no format translations were entered (bit of a hack to allow an appropriate error message to be displayed)
   let noFormatTranslations: boolean = $state(false);
 
-  const formatTypeCodes = [
-    { name: $translations.formatTypeCode_OPEN_OR_CLOSED, value: 'OPEN_OR_CLOSED' },
-    { name: $translations.formatTypeCode_COMMON_NEEDS_OR_RESTRICTION, value: 'COMMON_NEEDS_OR_RESTRICTION' },
-    { name: $translations.formatTypeCode_ALERT, value: 'ALERT' },
-    { name: $translations.formatTypeCode_LANGUAGE, value: 'LANGUAGE' },
-    { name: $translations.formatTypeCode_LOCATION, value: 'LOCATION' },
-    { name: $translations.formatTypeCode_MEETING_FORMAT, value: 'MEETING_FORMAT' },
-    { name: $translations.formatTypeCode_NONE, value: '' }
+  const a_aFormatTypeCodes = [
+    { name: $translations.a_aFormatTypeCode_OPEN_OR_CLOSED, value: 'OPEN_OR_CLOSED' },
+    { name: $translations.a_aFormatTypeCode_COMMON_NEEDS_OR_RESTRICTION, value: 'COMMON_NEEDS_OR_RESTRICTION' },
+    { name: $translations.a_aFormatTypeCode_LANGUAGE, value: 'LANGUAGE' },
+    { name: $translations.a_aFormatTypeCode_LOCATION, value: 'LOCATION' },
+    { name: $translations.a_aFormatTypeCode_MEETING_FORMAT, value: 'MEETING_FORMAT' },
+    { name: $translations.a_aFormatTypeCode_NONE, value: '' }
   ];
 
-  const nawsFormats = [
-    { name: $translations.nawsFormat_BEG, value: 'BEG' },
-    { name: $translations.nawsFormat_BT, value: 'BT' },
-    { name: $translations.nawsFormat_CAN, value: 'CAN' },
-    { name: $translations.nawsFormat_CH, value: 'CH' },
-    { name: $translations.nawsFormat_CLOSED, value: 'CLOSED' },
-    { name: $translations.nawsFormat_CPT, value: 'CPT' },
-    { name: $translations.nawsFormat_CW, value: 'CW' },
-    { name: $translations.nawsFormat_DISC, value: 'DISC' },
-    { name: $translations.nawsFormat_GL, value: 'GL' },
-    { name: $translations.nawsFormat_GP, value: 'GP' },
-    { name: $translations.nawsFormat_HYBR, value: 'HYBR' },
-    { name: $translations.nawsFormat_IP, value: 'IP' },
-    { name: $translations.nawsFormat_IW, value: 'IW' },
-    { name: $translations.nawsFormat_JFT, value: 'JFT' },
-    { name: $translations.nawsFormat_LANG, value: 'LANG' },
-    { name: $translations.nawsFormat_LC, value: 'LC' },
-    { name: $translations.nawsFormat_LIT, value: 'LIT' },
-    { name: $translations.nawsFormat_M, value: 'M' },
-    { name: $translations.nawsFormat_MED, value: 'MED' },
-    { name: $translations.nawsFormat_NC, value: 'NC' },
-    { name: $translations.nawsFormat_NONE, value: '' },
-    { name: $translations.nawsFormat_NS, value: 'NS' },
-    { name: $translations.nawsFormat_OPEN, value: 'OPEN' },
-    { name: $translations.nawsFormat_QA, value: 'QA' },
-    { name: $translations.nawsFormat_RA, value: 'RA' },
-    { name: $translations.nawsFormat_SD, value: 'S-D' },
-    { name: $translations.nawsFormat_SMOK, value: 'SMOK' },
-    { name: $translations.nawsFormat_SPAD, value: 'SPAD' },
-    { name: $translations.nawsFormat_SPK, value: 'SPK' },
-    { name: $translations.nawsFormat_STEP, value: 'STEP' },
-    { name: $translations.nawsFormat_SWG, value: 'SWG' },
-    { name: $translations.nawsFormat_TC, value: 'TC' },
-    { name: $translations.nawsFormat_TOP, value: 'TOP' },
-    { name: $translations.nawsFormat_TRAD, value: 'TRAD' },
-    { name: $translations.nawsFormat_VAR, value: 'VAR' },
-    { name: $translations.nawsFormat_VM, value: 'VM' },
-    { name: $translations.nawsFormat_W, value: 'W' },
-    { name: $translations.nawsFormat_WCHR, value: 'WCHR' },
-    { name: $translations.nawsFormat_Y, value: 'Y' }
+  const a_aFormats = [
+      { name: $translations.a_aFormat_AC, value: 'AC' },
+      { name: $translations.nawsFormat_BEG, value: 'BEG' },
+      { name: $translations.a_aFormat_CC, value: 'CC' },
+      { name: $translations.a_aFormat_CLOSED, value: 'CLOSED' },
+      { name: $translations.a_aFormat_FF, value: 'FF' },
+      { name: $translations.nawsFormat_HYBR, value: 'HYBR' },
+      { name: $translations.a_aFormat_LANG, value: 'LANG' },
+      { name: $translations.a_aFormat_LGBT, value: 'LGBT' },
+      { name: $translations.nawsFormat_M, value: 'M' },
+      { name: $translations.a_aFormat_OPEN, value: 'OPEN' },
+      { name: $translations.a_aFormat_P, value: 'P' },
+      { name: $translations.a_aFormat_POC, value: 'POC' },
+      { name: $translations.a_aFormat_SL, value: 'SL' },
+      { name: $translations.a_aFormat_SMOK, value: 'SMOK' },
+      { name: $translations.nawsFormat_TC, value: 'TC' },
+      { name: $translations.nawsFormat_VM, value: 'VM' },
+      { name: $translations.nawsFormat_W, value: 'W' },
+      { name: $translations.a_aFormat_WCHR, value: 'WCHR' },
+      { name: $translations.a_aFormat_Y, value: 'Y' },
+      { name: $translations.a_aFormat_YA, value: 'YA' }
   ];
 
   const yupSchema: any = {};
@@ -293,12 +273,12 @@
       </div>
     {/if}
     <div class="md:col-span-2">
-      <Label for="worldId" class="mb-2 md:col-span-2">{$translations.nawsFormatTitle}</Label>
-      <Select id="worldId" items={nawsFormats} name="worldId" bind:value={$data.worldId} class="rounded-lg dark:bg-gray-600" />
+      <Label for="worldId" class="mb-2 md:col-span-2">{$translations.a_aFormatTitle}</Label>
+      <Select id="worldId" items={a_aFormats} name="worldId" bind:value={$data.worldId} class="rounded-lg dark:bg-gray-600" />
     </div>
     <div class="md:col-span-2">
       <Label for="type" class="mb-2 md:col-span-2">{$translations.formatTypeTitle}</Label>
-      <Select id="type" items={formatTypeCodes} name="type" bind:value={$data.type} class="rounded-lg dark:bg-gray-600" />
+      <Select id="type" items={a_aFormatTypeCodes} name="type" bind:value={$data.type} class="rounded-lg dark:bg-gray-600" />
     </div>
     <div class="md:col-span-2">
       <Button type="submit" class="w-full" disabled={!$isDirty} onclick={disableButtonHack}>

@@ -42,8 +42,8 @@ describe('MeetingEditForm Component', () => {
         expect(screen.getByLabelText(translations.getString('hoursTitle'))).toBeInTheDocument();
         expect(screen.getByLabelText(translations.getString('minutesTitle'))).toBeInTheDocument();
         expect(screen.getByLabelText(translations.getString('serviceBodyTitle'))).toBeInTheDocument();
-        expect(screen.getByLabelText(translations.getString('emailTitle'))).toBeInTheDocument();
-        expect(screen.getByLabelText(translations.getString('worldIdTitle'))).toBeInTheDocument();
+        expect(screen.getByLabelText(translations.getString('a_aMtgEmailTitle'))).toBeInTheDocument();
+        expect(screen.getByLabelText(translations.getString('a_aWorldIdTitle'))).toBeInTheDocument();
         const formatsLabel = screen.getByText(translations.getString('formatsTitle'));
         expect(formatsLabel).toBeInTheDocument();
         const formatsComponent = screen.queryByRole('listbox') || document.querySelector('select[name="formatIds"]');
@@ -54,7 +54,7 @@ describe('MeetingEditForm Component', () => {
         expect(screen.getByLabelText(translations.getString('longitudeTitle'))).toBeInTheDocument();
         expect(screen.getByLabelText(translations.getString('latitudeTitle'))).toBeInTheDocument();
         expect(screen.getByLabelText(translations.getString('locationTextTitle'))).toBeInTheDocument();
-        expect(screen.getByLabelText(translations.getString('extraInfoTitle'))).toBeInTheDocument();
+        expect(screen.getByLabelText(translations.getString('a_aExtraInfoTitle'))).toBeInTheDocument();
         expect(screen.getByLabelText(translations.getString('streetTitle'))).toBeInTheDocument();
         expect(screen.getByLabelText(translations.getString('neighborhoodTitle'))).toBeInTheDocument();
         expect(screen.getByLabelText(translations.getString('boroughTitle'))).toBeInTheDocument();
@@ -65,12 +65,12 @@ describe('MeetingEditForm Component', () => {
         expect(screen.getByLabelText(translations.getString('nationTitle'))).toBeInTheDocument();
 
         // Contact fields
-        expect(screen.getByLabelText(translations.getString('contact1NameTitle'))).toBeInTheDocument();
-        expect(screen.getByLabelText(translations.getString('contact1PhoneTitle'))).toBeInTheDocument();
-        expect(screen.getByLabelText(translations.getString('contact1EmailTitle'))).toBeInTheDocument();
-        expect(screen.getByLabelText(translations.getString('contact2NameTitle'))).toBeInTheDocument();
-        expect(screen.getByLabelText(translations.getString('contact2PhoneTitle'))).toBeInTheDocument();
-        expect(screen.getByLabelText(translations.getString('contact2EmailTitle'))).toBeInTheDocument();
+        expect(screen.getByLabelText(translations.getString('a_aCmaNameTitle'))).toBeInTheDocument();
+        expect(screen.getByLabelText(translations.getString('a_aCmaPhoneTitle'))).toBeInTheDocument();
+        expect(screen.getByLabelText(translations.getString('a_aCmaEmailTitle'))).toBeInTheDocument();
+        expect(screen.getByLabelText(translations.getString('a_aGrNameTitle'))).toBeInTheDocument();
+        expect(screen.getByLabelText(translations.getString('a_aGrPhoneTitle'))).toBeInTheDocument();
+        expect(screen.getByLabelText(translations.getString('a_aGrEmailTitle'))).toBeInTheDocument();
         settings.customFields.forEach(({ name, displayName }) => {
           expect(screen.getByLabelText(displayName)).toBeInTheDocument();
           expect(screen.getByLabelText(displayName)).toHaveValue(selectedMeeting.customFields ? selectedMeeting.customFields[name] : '');
@@ -90,8 +90,8 @@ describe('MeetingEditForm Component', () => {
     expect(screen.getByLabelText(translations.getString('hoursTitle'))).toHaveValue(selectedMeeting.duration.split(':')[0]);
     expect(screen.getByLabelText(translations.getString('minutesTitle'))).toHaveValue(selectedMeeting.duration.split(':')[1]);
     expect(screen.getByLabelText(translations.getString('serviceBodyTitle'))).toHaveValue(selectedMeeting.serviceBodyId.toString());
-    expect(screen.getByLabelText(translations.getString('emailTitle'))).toHaveValue(selectedMeeting.email);
-    expect(screen.getByLabelText(translations.getString('worldIdTitle'))).toHaveValue(selectedMeeting.worldId);
+    expect(screen.getByLabelText(translations.getString('a_aMtgEmailTitle'))).toHaveValue(selectedMeeting.email);
+    expect(screen.getByLabelText(translations.getString('a_aWorldIdTitle'))).toHaveValue(selectedMeeting.worldId);
     const formatsHiddenSelect = document.querySelector('select[name="formatIds"]') as HTMLSelectElement;
     if (formatsHiddenSelect) {
       const selectedValues = Array.from(formatsHiddenSelect.selectedOptions).map((option: HTMLOptionElement) => Number(option.value));
@@ -107,7 +107,7 @@ describe('MeetingEditForm Component', () => {
     expect(screen.getByLabelText(translations.getString('longitudeTitle'))).toHaveValue(selectedMeeting.longitude.toString());
     expect(screen.getByLabelText(translations.getString('latitudeTitle'))).toHaveValue(selectedMeeting.latitude.toString());
     expect(screen.getByLabelText(translations.getString('locationTextTitle'))).toHaveValue(selectedMeeting.locationText);
-    expect(screen.getByLabelText(translations.getString('extraInfoTitle'))).toHaveValue(selectedMeeting.locationInfo);
+    expect(screen.getByLabelText(translations.getString('a_aExtraInfoTitle'))).toHaveValue(selectedMeeting.locationInfo);
     expect(screen.getByLabelText(translations.getString('streetTitle'))).toHaveValue(selectedMeeting.locationStreet);
     expect(screen.getByLabelText(translations.getString('neighborhoodTitle'))).toHaveValue(selectedMeeting.locationNeighborhood);
     expect(screen.getByLabelText(translations.getString('boroughTitle'))).toHaveValue(selectedMeeting.locationCitySubsection);
@@ -118,12 +118,12 @@ describe('MeetingEditForm Component', () => {
     expect(screen.getByLabelText(translations.getString('nationTitle'))).toHaveValue(selectedMeeting.locationNation);
 
     // Contact fields
-    expect(screen.getByLabelText(translations.getString('contact1NameTitle'))).toHaveValue(selectedMeeting.contactName1);
-    expect(screen.getByLabelText(translations.getString('contact1PhoneTitle'))).toHaveValue(selectedMeeting.contactPhone1);
-    expect(screen.getByLabelText(translations.getString('contact1EmailTitle'))).toHaveValue(selectedMeeting.contactEmail1);
-    expect(screen.getByLabelText(translations.getString('contact2NameTitle'))).toHaveValue(selectedMeeting.contactName2);
-    expect(screen.getByLabelText(translations.getString('contact2PhoneTitle'))).toHaveValue(selectedMeeting.contactPhone2);
-    expect(screen.getByLabelText(translations.getString('contact2EmailTitle'))).toHaveValue(selectedMeeting.contactEmail2);
+    expect(screen.getByLabelText(translations.getString('a_aCmaNameTitle'))).toHaveValue(selectedMeeting.contactName1);
+    expect(screen.getByLabelText(translations.getString('a_aCmaPhoneTitle'))).toHaveValue(selectedMeeting.contactPhone1);
+    expect(screen.getByLabelText(translations.getString('a_aCmaEmailTitle'))).toHaveValue(selectedMeeting.contactEmail1);
+    expect(screen.getByLabelText(translations.getString('a_aGrNameTitle'))).toHaveValue(selectedMeeting.contactName2);
+    expect(screen.getByLabelText(translations.getString('a_aGrPhoneTitle'))).toHaveValue(selectedMeeting.contactPhone2);
+    expect(screen.getByLabelText(translations.getString('a_aGrEmailTitle'))).toHaveValue(selectedMeeting.contactEmail2);
   });
 
   test('test Ensure tabs are present for existing meetings', async () => {
