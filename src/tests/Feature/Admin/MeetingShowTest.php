@@ -210,14 +210,14 @@ class MeetingShowTest extends TestCase
         $user = $this->createAdminUser();
         $token = $user->createToken('test')->plainTextToken;
 
-        $meeting = $this->createMeeting(['formats' => '1,2,3']);
+        $meeting = $this->createMeeting(['formats' => '1,6,13']);
         $data = $this->withHeader('Authorization', "Bearer $token")
             ->get("/api/v1/meetings/$meeting->id_bigint")
             ->assertStatus(200)
             ->json();
 
         $this->assertIsArray($data['formatIds']);
-        $this->assertEquals([1,2,3], $data['formatIds']);
+        $this->assertEquals([1,6,13], $data['formatIds']);
     }
 
     public function testShowMeetingFormatsNull()

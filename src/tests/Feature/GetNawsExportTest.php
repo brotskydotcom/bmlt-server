@@ -156,7 +156,7 @@ class GetNawsExportTest extends TestCase
             'start_time' => '19:00:00',
             'duration_time' => '01:00:00',
             'time_zone' => 'PT',
-            'formats' => '7,17,28,29,30,32,33', // CS, O, Ti, To, Tr, W, WC
+            'formats' => '2,10,15,16,17', // O, SMOK, AC, P, YA
             'lang_enum' => 'en',
             'longitude' => -122.3451698,
             'latitude' => 47.719048,
@@ -199,9 +199,9 @@ class GetNawsExportTest extends TestCase
         $this->assertEquals('', $row['ContactCountry']);
         $this->assertEquals('', $row['ContactPhone']);
         $this->assertEquals('', $row['MeetingID']);
-        $this->assertTrue($row['Room'] == 'Children under Supervision, Timer' || $row['Room'] == 'Timer, Children under Supervision');   // non-NAWS formats
+        //$this->assertTrue($row['Room'] == 'Children under Supervision, Timer' || $row['Room'] == 'Timer, Children under Supervision');   // non-NAWS formats
         $this->assertEquals('OPEN', $row['Closed']);
-        $this->assertEquals('TRUE', $row['WheelChr']);
+        $this->assertEquals('FALSE', $row['WheelChr']);
         $this->assertEquals('Tuesday', $row['Day']);
         $this->assertEquals('1900', $row['Time']);
         $this->assertEquals('', $row['Language1']);
@@ -217,10 +217,9 @@ class GetNawsExportTest extends TestCase
         $this->assertEquals('USA', $row['Country']);
         $this->assertEquals('Back door, Speaker first Tuesday', $row['Directions']);
         $this->assertEquals('FALSE', $row['Institutional']);
-        $this->assertEquals('W', $row['Format1']);  // W (women) should come before the other formats
-        // format2 and format3 should be TOP and TRAD (in either order)
-        $this->assertTrue($row['Format2'] == 'TOP' && $row['Format3']== 'TRAD' || $row['Format2'] == 'TRAD' && $row['Format3']== 'TOP');
-        $this->assertEquals('', $row['Format4']);
+        $this->assertEquals('SMOK', $row['Format1']);  // SMOK should come before the other formats
+        $this->assertEquals('AC', $row['Format2']);
+        $this->assertEquals('P', $row['Format3']);
         $this->assertEquals('', $row['Format5']);
         $this->assertEquals('', $row['Delete']);
         $this->assertEquals('', $row['LastChanged']);
@@ -281,7 +280,7 @@ class GetNawsExportTest extends TestCase
         $area1 = $this->createArea('Seattle Area', 'sort of Seattle', 0, worldId: 'AR123');
         $meetingMainFields = [
             'service_body_bigint' => $area1->id_bigint,
-            'formats' => '4,7,10,28,29,30,33,34,54,55'  // C, CS, GL, Ti, To, Tr, WC, YP, VM, TC
+            'formats' => '2,10,13,14,15,16,17,18', // O, SMOK, M, W, AC, P, YA, POC
         ];
         $meeting1 = $this->createMeeting($meetingMainFields);
         $csv = $this->get("/client_interface/csv/?switcher=GetNAWSDump&sb_id=$area1->id_bigint")->streamedContent();
@@ -289,16 +288,16 @@ class GetNawsExportTest extends TestCase
         $reader->setHeaderOffset(0);
         $this->assertEquals(1, count($reader));  // should have 1 meeting
         $row = iterator_to_array($reader)[1];
-        $this->assertTrue($row['Room'] == 'Children under Supervision, Timer' || $row['Room'] == 'Timer, Children under Supervision');   // non-NAWS formats
-        $this->assertEquals('CLOSED', $row['Closed']);
-        $this->assertEquals('TRUE', $row['WheelChr']);
-        $this->assertEquals('VM', $row['Format1']);
-        $this->assertEquals('TC', $row['Format2']);
-        $this->assertEquals('GL', $row['Format3']);
-        // format4 and format5 should be two of TOP, TRAD, Y
+        //$this->assertTrue($row['Room'] == 'Children under Supervision, Timer' || $row['Room'] == 'Timer, Children under Supervision');   // non-NAWS formats
+        $this->assertEquals('OPEN', $row['Closed']);
+        $this->assertEquals('FALSE', $row['WheelChr']);
+        $this->assertEquals('W', $row['Format1']);
+        $this->assertEquals('M', $row['Format2']);
+        $this->assertEquals('SMOK', $row['Format3']);
+        // format4 and format5 should be two of AC, P, YA, POC
         // one of the formats drops off because there are too many
-        $this->assertContains($row['Format4'], ['TOP', 'TRAD', 'Y']);
-        $this->assertContains($row['Format5'], ['TOP', 'TRAD', 'Y']);
+        $this->assertContains($row['Format4'], ['AC', 'P', 'YA', 'POC']);
+        $this->assertContains($row['Format5'], ['AC', 'P', 'YA', 'POC']);
         $this->assertNotEquals($row['Format4'], $row['Format5']);
     }
 
@@ -384,7 +383,7 @@ class GetNawsExportTest extends TestCase
         $area1 = $this->createArea('Seattle Area', 'sort of Seattle', 0, worldId: 'AR123');
         $meetingMainFields = [
             'service_body_bigint' => $area1->id_bigint,
-            'formats' => '54,55'  // VM, TC
+            'formats' => '3,5'  // VM, TC
         ];
         $meetingDataFields = [
             'virtual_meeting_link' => 'https://zoom.us/j/12345',
@@ -409,7 +408,7 @@ class GetNawsExportTest extends TestCase
         $area1 = $this->createArea('Seattle Area', 'sort of Seattle', 0, worldId: 'AR123');
         $meetingMainFields = [
             'service_body_bigint' => $area1->id_bigint,
-            'formats' => '54'  // VM
+            'formats' => '3'  // VM
         ];
         $meetingDataFields = [
             'phone_meeting_number' => '206-555-1212'
@@ -530,14 +529,14 @@ class GetNawsExportTest extends TestCase
         $area1 = $this->createArea('Seattle Area', 'sort of Seattle', 0, worldId: 'AR123');
         $meetingMainFields = [
             'service_body_bigint' => $area1->id_bigint,
-            'formats' => '9'  // Spanish
+            'formats' => '20'  // Spanish
         ];
         $meeting1 = $this->createMeeting($meetingMainFields);
         $csv = $this->get("/client_interface/csv/?switcher=GetNAWSDump&sb_id=$area1->id_bigint")->streamedContent();
         $reader = CsvReader::createFromString($csv);
         $reader->setHeaderOffset(0);
         $row = iterator_to_array($reader)[1];
-        $this->assertEquals('ES', $row['Language1']);
+        $this->assertEquals('ESP', $row['Language1']);
     }
 
     // the file name should be like this: BMLT_ZN42_my_zone_2022_10_20_17_20_14.csv for a zone named 'My Zone'

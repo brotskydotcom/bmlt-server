@@ -25,7 +25,7 @@ class TestCase extends BaseTestCase
         'start_time' => '19:00:00',
         'duration_time' => '01:00:00',
         'time_zone' => '',
-        'formats' => '17,29,30', // O,To,Tr
+        'formats' => '2,11,15', // O,BEG,AC
         'lang_enum' => 'en',
         'longitude' => -79.793701171875,
         'latitude' => 36.065752051707,
@@ -33,7 +33,7 @@ class TestCase extends BaseTestCase
     ];
 
     private static $meetingDataFieldDefaults = [
-        'meeting_name' => 'NA Meeting',
+        'meeting_name' => 'Al-Anon Meeting',
     ];
 
     protected function createRootServer(int $sourceId, string $name = 'test', string $url = 'https://test.com'): RootServer
