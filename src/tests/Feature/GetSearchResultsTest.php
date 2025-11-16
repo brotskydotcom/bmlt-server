@@ -2332,7 +2332,7 @@ class GetSearchResultsTest extends TestCase
         $this->assertArrayHasKey('location_notes', $meetingData);
         $this->assertEquals('Test notes', $meetingData['location_notes']);
         $this->assertArrayHasKey('notes', $meetingData);
-        $this->assertEquals('Test comments', $meetingData['notes']);
+        $this->assertEquals("Test comments\nWSO #worldid_mixed_default", $meetingData['notes']);
         $this->assertArrayHasKey('coordinates', $meetingData);
         $this->assertEquals('34.2359759,-118.5635721', $meetingData['coordinates']);
         $this->assertArrayHasKey('slug', $meetingData);
